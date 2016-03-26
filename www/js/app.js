@@ -27,26 +27,26 @@ app.controller('pickADate', function($scope, $ionicPopup) {
 
   function getString() {
   $scope.data = {};
-  $scope.getMovieTitle = function () {
+  $scope.getDate = function () {
     console.log('whatevs');
       var myPopup = $ionicPopup.show({
-          template: '<input type="text" ng-model="data.movie">',
-          title: 'What movie would you like to watch?',
+          template: '<input type="text" ng-model="data.codeclub">',
+          title: 'When is the next CodeClub?',
           scope: $scope,
           buttons: [
               { text: 'Cancel' },
               {
                   text: 'Submit',
-                  type: 'button-positive',
-                  onTap: function(e) {
-                    console.log(e);
-                    if(!$scope.data.movie) {
-                      e.preventDefault();
-                    } else {
-                      console.log($scope.data);
-                      return $scope.data.movie;
-                    }
-                  }
+                  type: 'button-positive'
+                  // onTap: function(e) {
+                  //   console.log(e);
+                  //   if(!$scope.data.movie) {
+                  //     e.preventDefault();
+                  //   } else {
+                  //     console.log($scope.data);
+                  //     return $scope.data.movie;
+                  //   }
+                  // }
               }
           ]
       });
