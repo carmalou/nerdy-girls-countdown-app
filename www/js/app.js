@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic']);
+var app = angular.module('starter', ['ionic'])
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -24,56 +24,51 @@ app.run(function($ionicPlatform) {
 });
 
 app.controller('pickADate', function($scope, $ionicPopup) {
-
-  function getString() {
   $scope.data = {};
-  $scope.getDate = function () {
-    console.log('whatevs');
+  $scope.pickNerdyDate = function () {
+    var popup = $ionicPopup.show({
+      template: '<input type="text" ng-model="data.dateString">',
+      title: 'When is the next Nerdy Girl\'s CodeClub? (Please input date as "Month Date, Year")',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: 'Submit',
+          type: 'button-positive',
+          onTap: function(e) {
+            console.log(e);
+            if(!$scope.data.dateString) {
+              e.preventDefault();
+            } else {
+              return $scope.data.dateString;
+            }
+          }
+        }
+      ]
+    });
+  };
+
+  $scope.submitNerdyDate = function () {
+    if($scope.data.dateString) {
+      window.localStorage.setItem("nerdyDate", $scope.data.dateString);
+      $scope.showNerdyDate();
+    } else {
       var myPopup = $ionicPopup.show({
-          template: '<input type="text" ng-model="data.codeclub">',
-          title: 'When is the next CodeClub?',
-          scope: $scope,
-          buttons: [
-              { text: 'Cancel' },
-              {
-                  text: 'Submit',
-                  type: 'button-positive'
-                  // onTap: function(e) {
-                  //   console.log(e);
-                  //   if(!$scope.data.movie) {
-                  //     e.preventDefault();
-                  //   } else {
-                  //     console.log($scope.data);
-                  //     return $scope.data.movie;
-                  //   }
-                  // }
-              }
-          ]
+        template: '<p></p>',
+        title: 'You must select a date!',
+        scope: $scope,
+        buttons: [
+          { text: 'OK' }
+        ]
       });
     }
-  }
-  // function pickNerdyDate ($scope, $ionicPopup) {
-  //   console.log('hey is this ever even called?');
-  //   var popup = $ionicPopup.show({
-  //     template: '<p></p>',
-  //     title: 'When is the next Nerdy Girl\'s CodeClub? (Please input date as "April 4, 2016")',
-  //     scope: $scope,
-  //     buttons: [
-  //       { text: 'Cancel' },
-  //       {
-  //         text: 'Submit',
-  //         type: 'button-positive'
-  //         // onTap: function(e) {
-  //         //   console.log(e);
-  //         //   if(true) {
-  //         //     e.preventDefault();
-  //         //   } else {
-  //         //     console.log($scope.data);
-  //         //     return;
-  //         //   }
-  //         // }
-  //       }
-  //     ]
-  //   });
-  // };
+  };
+
+  $scope.showNerdyDate = function () {
+    if(window.localStorage.getItem('nerdyDate')) {
+      $scope.showDate = window.localStorage.getItem('nerdyDate');
+    }
+  };
+
+  $scope.showNerdyDate();
 });
